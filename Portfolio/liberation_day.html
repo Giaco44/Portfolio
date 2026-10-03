@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Fotografia | Marco Rossi</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* RESET E CONFIGURAZIONE BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #0a0a0a;
+            overflow-x: hidden;
+            padding-top: 70px;
+        }
+
+        /* HEADER FISSO IN ALTO */
+        header {
+            position: absolute; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 60px;
+            z-index: 1000;
+            background-color: #ffffff;
+            border-bottom: none; 
+            box-shadow: none;    
+        }
+
+        .logo {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #0a0a0a;
+            text-decoration: none;
+        }
+
+        nav a {
+            color: #0a0a0a;
+            text-decoration: none;
+            margin-left: 35px;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 1;
+        }
+
+
+        /* --- SEZIONE INTESTAZIONE PAGINA --- */
+        .page-header-container {
+            text-align: center;
+            padding: 120px 20px 30px 20px;
+        }
+
+        /* Nome in grande, maiuscolo, grigio in alto al centro */
+        .title-gray {
+            font-size: 2.5rem;
+            color: #888888;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        /* Linea molto sottile orizzontale che percorre tutta la pagina */
+        .divider {
+            width: 100%;
+            height: 1px;
+            background-color: #dddddd;
+            margin: 30px 0;
+            grid-column: span 2; /* <-- Aggiungi questa riga per farla estendere su entrambe le colonne */
+        }
+
+        /* Nome in nero, grande ma un pelo più piccolo, sempre al centro */
+        .title-black {
+            font-size: 1.8rem;
+            color: #000000;
+            font-weight: 600;
+            margin: 0 0 50px 0;
+        }
+
+        /* --- CONTENITORE A CORNICE FISSA PER LE FOTO (RIDOTTO) --- */
+        .gallery-wrapper {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 35px 80px 35px; /* Margini di 10px dai bordi della pagina */
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px 35px; /* 10px di spazio orizzontale tra le colonne */
+        }
+
+        /* --- FOTO ORIZZONTALE (2 colonne, altezza naturale, testo in alto a sinistra) --- */
+        .portfolio-item.horizontal {
+            grid-column: span 2; /* Prende entrambe le colonne */
+            display: flex;
+            flex-direction: column; /* Mette il testo sopra e l'immagine sotto */
+        }
+
+        /* Contenitore del testo fuori dall'immagine, allineato a sinistra */
+        .portfolio-item.horizontal .photo-content-outside {
+            text-align: left;
+            margin-bottom: 10px; /* Distanza tra il testo e l'inizio della foto sotto */
+        }
+
+        .portfolio-item.horizontal .photo-box {
+            width: 100%;
+            background-color: transparent;
+        }
+
+        .portfolio-item.horizontal img {
+            width: 100%;
+            height: auto; /* Si sviluppa in altezza in base alle proporzioni reali */
+            display: block;
+        }
+
+        /* --- FOTO VERTICALE SINGOLA E TESTO DI FIANCO --- */
+        /* Rende flessibile la foto verticale singola quando ha il testo di fianco */
+        .photo-grid > .portfolio-item:has(+ .photo-content-side),
+        .photo-grid > .photo-content-side {
+            grid-column: span 1; /* Occupano esattamente una colonna ciascuno */
+        }
+
+        /* Stile base per il testo di fianco (default: allineato a sinistra) */
+        .photo-content-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centra verticalmente */
+            align-items: flex-start; /* Forza gli elementi ad allinearsi a sinistra */
+            text-align: left;        /* Forza il testo ad allinearsi a sinistra */
+            padding: 20px;
+        }
+
+        /* Se per caso vuoi che un blocco di testo sia allineato a destra, 
+        ti basta aggiungere la classe .text-right nell'HTML */
+        .photo-content-side.text-right {
+            text-align: right;
+            align-items: flex-end; /* Allinea anche gli elementi flex a destra */
+        }
+
+        /* --- DUE FOTO VERTICALI --- */
+        /* Spazio per le foto VERTICALI (testo sopra la foto) */
+        .portfolio-item:not(.horizontal) .photo-content-outside {
+            text-align: left;
+            margin-bottom: 10px; /* Distanza tra il testo e l'inizio della foto sotto */
+        }
+
+        /* Stili comuni del testo */
+        .photo-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin: 0 0 4px 0;
+            color: #111111;
+        }
+
+        .photo-subtitle {
+            font-size: 0.8rem;
+            font-weight: 300;
+            color: #666;
+            margin: 0;
+        }
+
+        /* Blocco singolo: immagine + testi */
+        .portfolio-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Se vuoi che una foto occupi tutta la larghezza (entrambe le colonne) */
+        .portfolio-item.full-width {
+            grid-column: span 2;
+        }
+
+        /* Fa sì che la linea e il titolo si estendano su entrambe le colonne al centro */
+        .portfolio-section-title {
+            grid-column: span 2;
+            text-align: center;
+            margin: 30px 0 20px 0;
+        }
+
+        /* Stile del riquadro della foto */
+        .photo-box {
+            width: 100%;
+            background-color: #f4f4f4;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Regola per adattare l'immagine SENZA zoom al passaggio del mouse */
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            /* Nessun effetto transform/zoom inserito qui */
+        }
+
+        /* --- FOOTER DI NAVIGAZIONE (LINK PRECEDENTE / SUCCESSIVO) --- */
+        .page-navigation {
+            max-width: 100%;
+            margin: 60px auto 40px auto;
+            padding: 0 35px; /* Rispetta lo stesso margine laterale della galleria */
+            display: flex;
+            justify-content: space-between; /* Spinge uno a sinistra e uno a destra */
+            align-items: center;
+            border-top: 1px solid #eaeaea; /* Una sottile linea di separazione sopra i link */
+            padding-top: 30px;
+        }
+
+        .nav-link {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #888888; /* Grigio elegante */
+            text-decoration: none;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #111111; /* Diventa più scuro al passaggio del mouse */
+        }
+
+        /* Adattamento per smartphone/schermi piccoli */
+        @media (max-width: 768px) {
+            /* Forza la griglia ad avere una sola colonna */
+            .photo-grid {
+            grid-template-columns: 1fr !important;
+            }
+
+            /* Fa in modo che qualsiasi elemento (sia foto che testi affiancati) 
+            occupi tutta la larghezza dello schermo su mobile */
+            .photo-grid > .portfolio-item,
+            .photo-grid > .photo-content-side,
+            .portfolio-item.full-width {
+                grid-column: span 1 !important;
+            }
+
+            /* Se avevi testi allineati a destra, su mobile è meglio rimetterli a sinistra 
+            perché la foto sta sopra e il testo sotto */
+            .photo-content-side,
+            .photo-content-side.text-right {
+                text-align: left !important;
+                align-items: flex-start !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HEADER -->
+    <header>
+        <a href="1Home.html" class="logo">GIACOMO COLASURDO</a>
+        <nav>
+            <a href="1Home.html#portfolio">Portfolio</a>
+            <a href="1Home.html#about">About</a>
+            <a href="1Home.html#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- INTESTAZIONE DELLA PAGINA -->
+    <div class="page-header-container">
+        <h1 class="title-gray">LIBERATION DAY</h1>
+        <div class="divider"></div>
+    </div>
+
+    <!-- GALLERIA FOTOGRAFICA -->
+    <div class="gallery-wrapper">
+        <div class="photo-grid">
+            
+            <!-- Foto Orizzontale con Testo -->
+            <div class="portfolio-item horizontal">
+                <div class="photo-content-outside">
+                    <h2 class="photo-title">The CLassic Line</h2>
+                    <p class="photo-subtitle">the Pagani Cave and the Presolana Massif</p>
+                </div>
+                <div class="photo-box">
+                    <img src="img/liberation_day/DSCF1771.JPG" alt="viaclassica">
+                </div>
+            </div>
+
+            <!-- Foto Orizzontale con Testo -->
+            <div class="portfolio-item horizontal">
+                <div class="photo-content-outside">
+                    <h2 class="photo-title">The CLassic Line</h2>
+                    <p class="photo-subtitle">the Pagani Cave and the Presolana Massif</p>
+                </div>
+                <div class="photo-box">
+                    <img src="img/liberation_day/DSCF1760.JPG" alt="viaclassica">
+                </div>
+            </div>
+
+            <!-- Foto Orizzontale con Testo -->
+            <div class="portfolio-item horizontal">
+                <div class="photo-content-outside">
+                    <h2 class="photo-title">The CLassic Line</h2>
+                    <p class="photo-subtitle">the Pagani Cave and the Presolana Massif</p>
+                </div>
+                <div class="photo-box">
+                    <img src="img/liberation_day/DSCF1757.JPG" alt="viaclassica">
+                </div>
+            </div>
+
+            <!-- Foto Orizzontale con Testo -->
+            <div class="portfolio-item horizontal">
+                <div class="photo-content-outside">
+                    <h2 class="photo-title">The CLassic Line</h2>
+                    <p class="photo-subtitle">the Pagani Cave and the Presolana Massif</p>
+                </div>
+                <div class="photo-box">
+                    <img src="img/liberation_day/DSCF1808.JPG" alt="viaclassica">
+                </div>
+            </div>
+
+            <!-- Foto Orizzontale con Testo -->
+            <div class="portfolio-item horizontal">
+                <div class="photo-content-outside">
+                    <h2 class="photo-title">The CLassic Line</h2>
+                    <p class="photo-subtitle">the Pagani Cave and the Presolana Massif</p>
+                </div>
+                <div class="photo-box">
+                    <img src="img/liberation_day/DSCF1821.JPG" alt="viaclassica">
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- NAVIGAZIONE FINE PAGINA -->
+    <div class="page-navigation">
+        <a href="southern_italy_countryside.html" class="nav-link">&larr; southern italy countryside</a>
+        <a href="1home.html" class="nav-link">home &rarr;</a>
+    </div>
+
+</body>
+</html>

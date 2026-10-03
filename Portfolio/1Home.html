@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Fotografia | Marco Rossi</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* RESET E CONFIGURAZIONE BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #0a0a0a;
+            overflow-x: hidden;
+            padding-top: 70px;
+        }
+
+        /* HEADER FISSO IN ALTO */
+        header {
+            position: absolute; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 60px;
+            z-index: 1000;
+            background-color: #ffffff;
+            border-bottom: none; 
+            box-shadow: none;    
+        }
+
+        .logo {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #0a0a0a;
+            text-decoration: none;
+        }
+
+        nav a {
+            color: #0a0a0a;
+            text-decoration: none;
+            margin-left: 35px;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 1;
+        }
+
+        /* STRUTTURA VERTICALE STANDARD */
+        .photo-section {
+            width: 100vw;
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 0 40px 0;
+            position: relative;
+            background-color: #ffffff;
+        }
+
+        .photo-section img {
+            width: 100%;
+            height: auto;
+            display: block;
+            position: relative; /* FONDAMENTALE per far funzionare il livello sopra */
+            z-index: 1;         /* Rimane sotto al link che ha z-index: 10 */
+            filter: brightness(0.8); 
+            transition: transform 0.6s ease, filter 0.6s ease;
+        }
+
+        /* Fa zoomare e schiarire l'immagine quando il mouse passa sul link */
+        .interactive-overlay-link:hover ~ img {
+            transform: scale(1.04);
+        }
+
+        .photo-content {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .photo-title {
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .photo-subtitle {
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: #666;
+        }
+
+        /* --- MODIFICHE MIRATE PER IL BOTTONE E L'INTERAZIONE --- */
+
+        /* 1. Il bottone ora è un'area circoscritta al centro (non più tutto lo schermo) */
+        .interactive-overlay-link {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%; /* Torna ad occupare tutta la larghezza per far allungare le linee */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            z-index: 10;
+            pointer-events: none; /* DISABILITA il mouse nello spazio vuoto attorno alle linee */
+        }
+
+        /* 3 & 4. Contenitore che gestisce l'ingrandimento e la transizione fluida in entrata/uscita */
+        .overlay-content {
+            display: flex;
+            align-items: center;
+            width: 99%; /* Torna a coprire quasi tutta la pagina per allungare le linee */
+            max-width: none;
+            justify-content: center;
+            text-align: center;
+            transition: transform 0.4s ease;
+            pointer-events: auto; /* RIABILITA il mouse (il "bottone invisibile") solo attorno alla scritta */
+            padding: 25px 40px;   /* Area sensibile e cliccabile circoscritta al centro */
+        }
+
+        /* 6. Scritta leggermente più grande rispetto a prima */
+        .overlay-text {
+            font-size: 2rem; 
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.75); /* Colore iniziale semi-trasparente */
+            padding: 0 25px;
+            transition: color 0.4s ease;
+            white-space: nowrap;
+        }
+
+        /* 5. Linee più spesse (2px invece di 1px) */
+        .line {
+            flex-grow: 1;
+            height: 2px; 
+            background-color: rgba(255, 255, 255, 0.75);
+            width: 0; /* CORRETTO: deve partire da 0 per poi aprirsi al 100% al passaggio del mouse */
+            transition: width 0.5s ease, background-color 0.4s ease;
+        }
+
+        /* EFFETTO HOVER AL PASSAGGIO SUL BOTTONE */
+        .interactive-overlay-link:hover .overlay-content {
+            transform: scale(1.06); /* 3. La scritta e le linee ingrandiscono dolcemente */
+        }
+
+        /* 2. La scritta diventa leggermente più chiara/definita, NON nera */
+        .interactive-overlay-link:hover .overlay-text {
+            color: #ffffff; /* Bianco pieno molto nitido */
+        }
+
+        .interactive-overlay-link:hover .line {
+            width: 100%;
+            background-color: #ffffff; /* Anche le linee diventano bianche piene */
+        }
+        /* ---------------------------------------------------- */
+
+        /* SEZIONE ABOUT / CONTATTI FINALE */
+        .about-section {
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 50px;
+            background-color: #f9f9f9;
+        }
+
+        .about-container {
+            max-width: 600px;
+        }
+
+        .about-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .about-text {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border: 1px solid #0a0a0a;
+            color: #0a0a0a;
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background-color: #0a0a0a;
+            color: #ffffff;
+        }
+
+        /* RESPONSIVE PER SMARTPHONE */
+        @media (max-width: 768px) {
+            header {
+                padding: 0 20px;
+            }
+            nav a {
+                margin-left: 15px;
+                font-size: 0.75rem;
+            }
+            .photo-section {
+                padding: 20px;
+            }
+            .overlay-text {
+                font-size: 1rem;
+                letter-spacing: 2px;
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER FISSO -->
+    <header>
+        <a href="1home.html" class="logo">GIACOMO COLASURDO</a>
+        <nav>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- SEZIONE 1: FOTO PANORAMICA (HOME) -->
+    <section class="photo-section">
+        <img src="img/home/20190920_163920.jpg" alt="gleno">
+    </section>
+
+    <!-- SEZIONE 2: SECONDA FOTO -->
+    <section class="photo-section" id="portfolio">
+        <a href="farnese_palace.html" class="interactive-overlay-link">
+            <div class="overlay-content">
+                <div class="line"></div>
+                <span class="overlay-text">Farnese Palace</span>
+                <div class="line"></div>
+            </div>
+        </a>
+        <img src="img/home/DSCF3744.JPG" alt="farnese_palace">
+    </section>
+
+    <!-- SEZIONE 3: TERZA FOTO -->
+    <section class="photo-section">
+        <a href="orobie_alps.html" class="interactive-overlay-link">
+            <div class="overlay-content">
+                <div class="line"></div>
+                <span class="overlay-text">Orobie Alps</span>
+                <div class="line"></div>
+            </div>
+        </a>
+        <img src="img/home/DSCF2011.JPG" alt="orobie_alps">
+    </section>
+
+    <!-- SEZIONE 4: QUARTA FOTO -->
+    <section class="photo-section">
+        <a href="southern_italy_countryside.html" class="interactive-overlay-link">
+            <div class="overlay-content">
+                <div class="line"></div>
+                <span class="overlay-text">Southern Italy Countryside</span>
+                <div class="line"></div>
+            </div>
+        </a>
+        <img src="img/home/20210808_181929.jpg" alt="southern_italy_countryside">
+    </section>
+
+    <!-- SEZIONE 6: SESTA FOTO -->
+    <section class="photo-section">
+        <a href="liberation_day.html" class="interactive-overlay-link">
+            <div class="overlay-content">
+                <div class="line"></div>
+                <span class="overlay-text">Liberation Day</span>
+                <div class="line"></div>
+            </div>
+        </a>
+        <img src="img/home/DSCF1739.JPG" alt="liberation_day">
+    </section>
+
+    <!-- SEZIONE 8: ABOUT / CONTATTI FINALE -->
+    <section class="about-section" id="about">
+        <div class="about-container" id="contact">
+            <h2 class="about-title">La fotografia</h2>
+            <p class="about-text">
+                La fotografia è fatta di attimi e di momenti impressi per sempre, ma per me non si tratta solo di bei ricordi, la fotografia è pura arte visiva capace di trasmettere delle emozioni attraverso i colori, mentre la composizione diventa profonda armonia per l’anima. 
+            </p>
+            <a href="mailto:tuamail@example.com" class="contact-btn">Mettiti in contatto</a>
+            <p class="about-text">
+            </p>
+            <p class="about-text">
+                Giacomo Colasurdo. All rights reserved 2026
+            </p>
+        </div>
+    </section>
+
+</body>
+</html>
