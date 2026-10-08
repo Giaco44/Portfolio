@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photography | Giacomo Colasurdo</title>
+    <title>Giacomo Colasurdo</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,7 +79,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 0 0 40px 0;
+            padding: 0 0 24px 0;
             position: relative;
             background-color: #ffffff;
         }
@@ -94,116 +94,93 @@
             transition: transform 0.6s ease, filter 0.6s ease;
         }
 
-        /* Fa zoomare e schiarire l'immagine quando il mouse passa sul link */
-        .interactive-overlay-link:hover ~ img {
-            transform: scale(1.04);
-        }
-
-        .photo-content {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .photo-title {
-            font-size: 1rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        .photo-subtitle {
-            font-size: 0.85rem;
-            font-weight: 300;
-            color: #666;
-        }
-
         /* --- MODIFICHE MIRATE PER IL BOTTONE E L'INTERAZIONE --- */
 
-        /* 1. Il bottone ora è un'area circoscritta al centro (non più tutto lo schermo) */
+        /* 1. Il contenitore del link copre l'area ma non intercetta i click */
         .interactive-overlay-link {
             position: absolute;
             top: 50%;
             left: 0;
             transform: translateY(-50%);
-            width: 100%; /* Torna ad occupare tutta la larghezza per far allungare le linee */
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             text-decoration: none;
             z-index: 10;
-            pointer-events: none; /* DISABILITA il mouse nello spazio vuoto attorno alle linee */
+            pointer-events: none; /* Disabilita i click nell'area vuota */
         }
 
-        /* 3 & 4. Contenitore che gestisce l'ingrandimento e la transizione fluida in entrata/uscita */
+        /* Contenitore grafico di linee e testo */
         .overlay-content {
             display: flex;
             align-items: center;
-            width: 99%; /* Torna a coprire quasi tutta la pagina per allungare le linee */
+            width: 100vw;
             max-width: none;
             justify-content: center;
             text-align: center;
-            transition: transform 0.4s ease;
-            pointer-events: auto; /* RIABILITA il mouse (il "bottone invisibile") solo attorno alla scritta */
-            padding: 25px 40px;   /* Area sensibile e cliccabile circoscritta al centro */
+            pointer-events: none; /* Disabilitato per confinare il "bottone" alla sola scritta */
         }
 
-        /* 6. Scritta leggermente più grande rispetto a prima */
+        /* 1. Solo la scritta è l'effettivo "bottone" ed è cliccabile */
         .overlay-text {
             font-size: 2rem; 
             font-weight: 600;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.75); /* Colore iniziale semi-trasparente */
-            padding: 0 25px;
+            color: rgba(255, 255, 255, 0.75);
+            padding: 10px 25px; /* Spaziatura attorno al testo cliccabile */
             transition: color 0.4s ease;
             white-space: nowrap;
+            pointer-events: auto; /* RIABILITA il mouse/click SOLO sulla scritta */
+            cursor: pointer;
         }
 
-        /* 5. Linee più spesse (2px invece di 1px) */
+        /* 3. Definizione delle linee con opacità 0 e larghezza normale */
         .line {
             flex-grow: 1;
             height: 2px; 
-            background-color: rgba(255, 255, 255, 0.75);
-            width: 0; /* CORRETTO: deve partire da 0 per poi aprirsi al 100% al passaggio del mouse */
-            transition: width 0.5s ease, background-color 0.4s ease;
+            background-color: #ffffff;
+            opacity: 0; /* Di base sono completamente trasparenti */
+            transition: opacity 0.5s ease; /* Transizione fluida solo sull'opacità */
         }
 
-        /* EFFETTO HOVER AL PASSAGGIO SUL BOTTONE */
-        .interactive-overlay-link:hover .overlay-content {
-            transform: scale(1.06); /* 3. La scritta e le linee ingrandiscono dolcemente */
+        /* EFFETTI HOVER (Quando il mouse passa sopra la scritta) */
+
+        /* Cambia colore al testo senza ingrandirlo */
+        .overlay-text:hover {
+            color: #ffffff;
         }
 
-        /* 2. La scritta diventa leggermente più chiara/definita, NON nera */
-        .interactive-overlay-link:hover .overlay-text {
-            color: #ffffff; /* Bianco pieno molto nitido */
+        /* 3. Le linee compaiono e si allungano verso l'esterno quando si passa sopra la scritta */
+        .overlay-content:has(.overlay-text:hover) .line {
+            transition: opacity 1.5s ease;
+            opacity: 1;
         }
 
-        .interactive-overlay-link:hover .line {
-            width: 100%;
-            background-color: #ffffff; /* Anche le linee diventano bianche piene */
-        }
         /* ---------------------------------------------------- */
 
         /* SEZIONE ABOUT / CONTATTI FINALE */
         .about-section {
             width: 100vw;
-            min-height: 100vh;
+            margin-top: 8px;
+            min-height: 50px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 50px;
-            background-color: #f9f9f9;
+            padding-bottom: 32px;
+            background-color: white;
         }
 
         .about-container {
-            max-width: 600px;
+            max-width: 90vw;
         }
 
         .about-title {
             font-size: 2rem;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-weight: 500;
             letter-spacing: 1px;
         }
@@ -212,25 +189,133 @@
             font-size: 0.95rem;
             line-height: 1.8;
             color: #555;
-            margin-bottom: 30px;
+            margin-bottom: 5px;
             font-weight: 300;
         }
 
-        .contact-btn {
-            display: inline-block;
-            padding: 12px 30px;
-            border: 1px solid #0a0a0a;
-            color: #0a0a0a;
-            text-decoration: none;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
+        /* Sezione Contatti - Allineata a sinistra, senza riquadro esterno */
+        .contact-section {
+            background-color: #ffffff;
+            padding: 100px 150px 120px 150px;
+            font-family: Arial, sans-serif;
+            text-align: left;
         }
 
-        .contact-btn:hover {
-            background-color: #0a0a0a;
-            color: #ffffff;
+        .contact-container {
+            max-width: 100%;
+            width: 100%;
+            background: transparent;
+            padding: 0;
+            box-shadow: none;
+            border-radius: 0;
+        }
+
+        .contact-container h2 {
+            font-size: 2rem;
+            margin-bottom: 50px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .contact-container p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 300;
+        }
+
+        * Form Styles */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Riga con First Name e Last Name affiancati */
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Gruppi singoli (Label + Input) */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 300;
+
+        }
+
+        /* Input di testo, email e textarea minimalisti: grigio chiaro, angoli retti, più grandi */
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: 100%;
+            padding: 16px 18px; /* Riquadri più grandi */
+            background-color: #00000006; /* Grigio chiaro dentro */
+            border: 1px solid #cccccc; /* Bordo grigio poco più scuro */
+            border-radius: 0px; /* Angoli retti */
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #111111;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        /* Evidenzia il campo quando ci clicchi dentro (Bordo Nero) */
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #000000; /* Bordo nero in evidenza */
+            background-color: #ffffff;
+        }
+
+        /* Campo Messaggio più grande e senza possibilità di ampliare (resize: none) */
+        .contact-form textarea {
+            resize: none; /* Toglie la possibilità di ridimensionare */
+            min-height: 180px; /* Riquadro messaggio più grande */
+        }
+
+        /* Pulsante Invia nero con angoli retti */
+        .submit-btn {
+            background-color: #33333377;
+            color: white;
+            margin-top: 19px;
+            border: 1px solid #cccccc;
+            padding: 16px 24px;
+            font-size: 16px;
+            letter-spacing: 4.5px;
+            font-weight: bold;
+            border-radius: 0px; /* Angoli retti */
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            width: 15%;
+        }
+
+        .submit-btn:hover {
+            background-color: #00000006;
+            color: #555;
+        }
+
+        /* Adattamento per dispositivi mobili */
+        @media (max-width: 480px) {
+            .form-row {
+                flex-direction: column;
+                gap: 20px;
+            }
         }
 
         /* RESPONSIVE PER SMARTPHONE */
@@ -268,6 +353,19 @@
     <!-- SEZIONE 1: FOTO PANORAMICA (HOME) -->
     <section class="photo-section">
         <img src="img/home/20190920_163920.jpg" alt="gleno">
+    </section>
+
+    <!-- SEZIONE 8: ABOUT / CONTATTI FINALE -->
+    <section class="about-section" id="about">
+        <div class="about-container">
+            <p class="about-text">
+                Photography captures moments and memories to keep them forever, but to me, it's so much more than that. It is pure visual art, where color stirs deep emotions and composition creates a profound harmony for the soul.</p>
+            <p class="about-text">
+            </p>
+            <p class="about-text">
+                An Italian native with a lifelong passion for nature and travel, I've had a camera in my hand since I was a kid and I simply love looking at the world through a lens.
+            </p>
+        </div>
     </section>
 
     <!-- SEZIONE 2: SECONDA FOTO -->
@@ -318,22 +416,49 @@
         <img src="img/home/DSCF1739.JPG" alt="liberation_day">
     </section>
 
-    <!-- SEZIONE 8: ABOUT / CONTATTI FINALE -->
-    <section class="about-section" id="about">
-        <div class="about-container" id="contact">
-            <h2 class="about-title">La fotografia</h2>
-            <p class="about-text">
-                Photography captures moments and memories to keep them forever, but to me, it's so much more than that. It is pure visual art, where color stirs deep emotions and composition creates a profound harmony for the soul.</p>
-            <p class="about-text">
-            </p>
-            <p class="about-text">
-                An Italian native with a lifelong passion for nature and travel, I've had a camera in my hand since I was a kid and I simply love looking at the world through a lens.
-            </p>
-            <a href="mailto:colasurdo.g2000@gmail.com" class="contact-btn">Get in touch</a>
-            <p class="about-text">
-            </p>
+<section class="contact-section" id="contact">
+  <div class="contact-container">
+    <h2>Contact</h2>
+
+    <!-- Form di Contatto -->
+    <form class="contact-form" action="#" method="POST">
+      
+      <!-- Prima riga: First Name e Last Name affiancati -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="first-name">First Name</label>
+          <input type="text" id="first-name" name="first_name" required>
         </div>
-    </section>
+        <div class="form-group">
+          <label for="last-name">Last Name</label>
+          <input type="text" id="last-name" name="last_name" required>
+        </div>
+      </div>
+
+      <!-- Seconda riga: Email Address -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <!-- Terza riga: Subject -->
+      <div class="form-group">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" required>
+      </div>
+
+      <!-- Quarta riga: Message (Riquadro più grande) -->
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="6" required></textarea>
+      </div>
+
+      <!-- Pulsante di invio -->
+      <button type="submit" class="submit-btn">SUBMIT</button>
+
+    </form>
+  </div>
+</section>
 
 </body>
 </html>
