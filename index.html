@@ -339,7 +339,6 @@
     </style>
 </head>
 <body>
-
     <!-- HEADER FISSO -->
     <header>
         <a href="index.html" class="logo">GIACOMO COLASURDO</a>
@@ -416,59 +415,57 @@
         <img src="img/home/DSCF1739.JPG" alt="liberation_day">
     </section>
 
-<section class="contact-section" id="contact">
-    <div class="contact-container">
-    <h2>Contact</h2>
+    <section class="contact-section" id="contact">
+        <div class="contact-container">
+            <h2>Contact</h2>
 
-    <!-- Form di Contatto -->
-    <form class="contact-form" name="contact" method="POST" data-netlify="true">
-    <input type="hidden" name="form-name" value="contact">
-    <!-- Prima riga: First Name e Last Name affiancati -->
-    <div class="form-row">
-        <div class="form-group">
-        <label for="first-name">First Name</label>
-        <input type="text" id="first-name" name="first_name" required
-            oninvalid="this.setCustomValidity('Please fill out this field.')" 
-            oninput="this.setCustomValidity('')">
+            <!-- Form di Contatto -->
+            <form class="contact-form" name="contact" method="POST" data-netlify="true">
+                <input type="hidden" name="form-name" value="contact">
+                <!-- Prima riga: First Name e Last Name affiancati -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" name="first_name" required
+                            oninvalid="this.setCustomValidity('Please fill out this field.')" 
+                            oninput="this.setCustomValidity('')">
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" name="last_name" required
+                            oninvalid="this.setCustomValidity('Please fill out this field.')" 
+                            oninput="this.setCustomValidity('')">
+                    </div>
+                </div>
+
+                <!-- Seconda riga: Email Address -->
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required
+                    oninvalid="this.setCustomValidity('Please fill out this field.')" 
+                    oninput="this.setCustomValidity('')">
+                </div>
+
+                <!-- Terza riga: Subject -->
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="Object" name="Object" required
+                        oninvalid="this.setCustomValidity('Please fill out this field.')" 
+                        oninput="this.setCustomValidity('')">
+                </div>
+
+                <!-- Quarta riga: Message (Riquadro più grande) -->
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="6" required
+                        oninvalid="this.setCustomValidity('Please fill out this field.')" 
+                        oninput="this.setCustomValidity('')"></textarea>
+                </div>
+
+                <!-- Pulsante di invio -->
+                <button type="submit" class="submit-btn">SUBMIT</button>
+            </form>
         </div>
-        <div class="form-group">
-        <label for="last-name">Last Name</label>
-        <input type="text" id="last-name" name="last_name" required
-            oninvalid="this.setCustomValidity('Please fill out this field.')" 
-            oninput="this.setCustomValidity('')">
-        </div>
-    </div>
-
-    <!-- Seconda riga: Email Address -->
-    <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" required
-            oninvalid="this.setCustomValidity('Please fill out this field.')" 
-            oninput="this.setCustomValidity('')">
-    </div>
-
-    <!-- Terza riga: Subject -->
-    <div class="form-group">
-        <label for="subject">Subject</label>
-        <input type="text" id="Object" name="Object" required
-            oninvalid="this.setCustomValidity('Please fill out this field.')" 
-            oninput="this.setCustomValidity('')">
-    </div>
-
-    <!-- Quarta riga: Message (Riquadro più grande) -->
-    <div class="form-group">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="6" required
-            oninvalid="this.setCustomValidity('Please fill out this field.')" 
-            oninput="this.setCustomValidity('')"></textarea>
-    </div>
-
-    <!-- Pulsante di invio -->
-    <button type="submit" class="submit-btn">SUBMIT</button>
-
-    </form>
-</div>
-</section>
-</form>
+    </section>
 </body>
 </html>
