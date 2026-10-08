@@ -417,47 +417,58 @@
     </section>
 
 <section class="contact-section" id="contact">
-  <div class="contact-container">
+    <div class="contact-container">
     <h2>Contact</h2>
 
     <!-- Form di Contatto -->
     <form class="contact-form" name="contact" method="POST" data-netlify="true">
     <input type="hidden" name="form-name" value="contact">
-        <!-- Prima riga: First Name e Last Name affiancati -->
-        <div class="form-row">
+    <!-- Prima riga: First Name e Last Name affiancati -->
+    <div class="form-row">
         <div class="form-group">
-          <label for="first-name">First Name</label>
-          <input type="text" id="first-name" name="first_name" required>
+        <label for="first-name">First Name</label>
+        <input type="text" id="first-name" name="first_name" required
+            oninvalid="this.setCustomValidity('Please fill out this field.')" 
+            oninput="this.setCustomValidity('')">
         </div>
         <div class="form-group">
-          <label for="last-name">Last Name</label>
-          <input type="text" id="last-name" name="last_name" required>
+        <label for="last-name">Last Name</label>
+        <input type="text" id="last-name" name="last_name" required
+            oninvalid="this.setCustomValidity('Please fill out this field.')" 
+            oninput="this.setCustomValidity('')">
         </div>
-      </div>
+    </div>
 
-      <!-- Seconda riga: Email Address -->
-      <div class="form-group">
+    <!-- Seconda riga: Email Address -->
+    <div class="form-group">
         <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" required>
-      </div>
+        <input type="email" id="email" name="email" required
+            oninvalid="this.setCustomValidity('Please fill out this field.')" 
+            oninput="this.setCustomValidity('')">
+    </div>
 
-      <!-- Terza riga: Subject -->
-      <div class="form-group">
+    <!-- Terza riga: Subject -->
+    <div class="form-group">
         <label for="subject">Subject</label>
-        <input type="text" id="subject" name="subject" required>
-      </div>
+        <input type="text" id="subject" name="subject" required
+            oninvalid="this.setCustomValidity('Please fill out this field.')" 
+            oninput="this.setCustomValidity('')">
+    </div>
 
-      <!-- Quarta riga: Message (Riquadro più grande) -->
-      <div class="form-group">
+    <!-- Quarta riga: Message (Riquadro più grande) -->
+    <div class="form-group">
         <label for="message">Message</label>
-        <textarea id="message" name="message" rows="6" required></textarea>
-      </div>
+        <textarea id="message" name="message" rows="6" required
+            oninvalid="this.setCustomValidity('Please fill out this field.')" 
+            oninput="this.setCustomValidity('')">
+        </textarea>
+    </div>
 
-      <!-- Pulsante di invio -->
-      <button type="submit" class="submit-btn">SUBMIT</button>
+    <!-- Pulsante di invio -->
+    <button type="submit" class="submit-btn">SUBMIT</button>
 
     </form>
-  </div>
+</div>
 </section>
 </form>
 </body>
