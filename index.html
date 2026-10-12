@@ -95,6 +95,34 @@
             transition: transform 0.6s ease, filter 0.6s ease;
         }
 
+        /* ==========================================================
+        SLIDER SPECIALE SOLO PER LA HERO-SECTION INIZIALE
+        ================================================---------- */
+        .photo-section.hero-slider {
+            position: relative;
+            overflow: hidden; /* Nasconde le immagini mentre sfumano */
+        }
+
+        /* Regole per tutte le immagini dentro questo slider speciale */
+        .photo-section.hero-slider .slide {
+            position: absolute; /* Le sovrappone esattamente nello stesso punto */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            display: block;
+            z-index: 1;
+            filter: brightness(0.8);
+            transition: opacity 1.5s ease-in-out, transform 0.6s ease, filter 0.6s ease; /* Dissolvenza di 1.5 secondi */
+            opacity: 0; /* Di base sono invisibili */
+        }
+
+        /* L'immagine attiva al momento è visibile */
+        .photo-section.hero-slider .slide.active {
+            position: relative; /* Restituisce l'altezza corretta alla sezione del browser */
+            opacity: 1;
+        }
+
         /* --- MODIFICHE MIRATE PER IL BOTTONE E L'INTERAZIONE --- */
 
         /* 1. Il contenitore del link copre l'area ma non intercetta i click */
@@ -163,19 +191,22 @@
         CONTENITORE PRINCIPALE (Affianca About e Contact su desktop)
         ================================================---------- */
         .about-contact-wrapper {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
+            grid-template-rows: auto auto; 
+            row-gap: 45px;
             width: 100vw;
             background-color: white;
             position: relative;
             z-index: 1;
             box-sizing: border-box;
+            padding: 0 0 0 0;
         }
 
         /* ==========================================================
         SEZIONE ABOUT (Metà destra su desktop)
         ================================================---------- */
         .about-section {
-            flex: 1; /* Occupa metà dello spazio */
             background-color: white;
             padding: 100px 75px 120px 75px;
             display: flex;
@@ -183,7 +214,6 @@
             justify-content: flex-start;
             text-align: left; /* Allineato a sinistra per coerenza con contact */
             box-sizing: border-box;
-            order: 2; /* Su desktop sta a destra */
         }
 
         .about-container {
@@ -211,13 +241,11 @@
         SEZIONE CONTATTI (Metà sinistra su desktop)
         ================================================---------- */
         .contact-section {
-            flex: 1; /* Occupa l'altra metà dello spazio */
             background-color: #ffffff;
             padding: 100px 75px 120px 75px;
             font-family: Arial, sans-serif;
             text-align: left;
             box-sizing: border-box;
-            order: 1; /* Su desktop sta a sinistra */
         }
 
         .contact-container {
@@ -319,36 +347,72 @@
         }
 
         .submit-btn:hover {
-            background-color: #00000006;
-            color: #555;
+            background-color:  #555;
+            color: white;
+        }
+        
+        .photo-wrapper {
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            padding: 30px; /* La tua cornice */
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        /* 2. L'immagine bloccata con il metodo "classico" anti-ritaglio */
+        .responsive-photo {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain !important; /* Forza il browser a non tagliare nulla */
+            object-position: center;     /* Centra la foto nella cella */
         }
 
         /* ==========================================================
         MEDIA QUERY (Responsive per schermi piccoli / smartphone)
         ================================================---------- */
-        @media (max-width: 900px) {
+        @media (max-width: 1200px) {
+            /* Quando lo schermo scende sotto i 1200px, riduciamo il padding */
+            .photo-wrapper {
+                padding: 20px;
+            }
+        }
+        @media (max-width: 1000px) {
             .about-contact-wrapper {
-                flex-direction: column; /* Impila gli elementi in verticale */
+                grid-template-columns: 1fr; /* Una sola colonna a tutta larghezza, niente elementi minuscoli */
+                grid-template-rows: auto;
             }
 
-            /* Inverte l'ordine: About prima (sopra), Contact dopo (sotto) */
-            .about-section {
-                order: 1;
-                padding: 60px 30px;
+            .photo-wrapper {
+                padding: 10px;
             }
 
-            .contact-section {
-                order: 2;
-                padding: 60px 30px;
+            /* Ordine verticale stabilito per schermi ridotti */
+            .about-section { 
+                order: 1; 
+                padding: 60px 10px; 
+            }
+            
+            .photo-top { 
+                    order: 2; 
+                }
+
+            .contact-section { 
+                order: 3; 
+                padding: 10px 90px; 
+            }
+            .photo-bottom { 
+                order: 4; 
             }
 
             .form-row {
-                flex-direction: column; /* Anche i campi nome/cognome vanno uno sotto l'altro su mobile */
+                flex-direction: column;
                 gap: 0;
             }
 
             .submit-btn {
-                width: 100%; /* Pulsante a tutta larghezza su mobile per comodità */
+                width: 100%;
             }
         }
     </style>
@@ -365,8 +429,13 @@
     </header>
 
     <!-- SEZIONE 1: FOTO PANORAMICA (HOME) -->
-    <section class="photo-section">
-        <img src="img/home/20190920_163920.jpg" alt="gleno">
+    <section class="photo-section hero-slider">
+        <!-- Le immagini dello slideshow (puoi metterne quante ne vuoi) -->
+        <img src="img/home/20190920_163920.jpg" alt="gleno" class="slide active">
+        <img src="img/home/DSCF2282.jpg" alt="ibex" class="slide">
+        <img src="img/home/DSCF1892.JPG" alt="liguria" class="slide">
+        <img src="img/home/DSCF2316.JPG" alt="montagna" class="slide">
+                <img src="img/home/DSCF2457.JPG" alt="rocce" class="slide">
     </section>
 
     <!-- SEZIONE 2: SECONDA FOTO -->
@@ -418,6 +487,10 @@
     </section>
 
     <div class="about-contact-wrapper">
+        <!-- 1. Foto in alto a sinistra -->
+        <div class="grid-item photo-wrapper photo-top">
+            <img src="img/home/DSCF2337.jpg" alt="Foto 1" class="responsive-photo">
+        </div>
         <!-- Sezione About (A destra su desktop, sopra su mobile) -->
         <section class="about-section"  id="about">
             <div class="about-container">
@@ -483,6 +556,35 @@
                 </form>
             </div>
         </section>
+        <!-- 4. Foto in basso a destra -->
+        <div class="grid-item photo-wrapper photo-bottom">
+            <img src="img/home/DSCF3717.jpg" alt="Foto 2" class="responsive-photo">
+        </div>
     </div>
 </body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const slides = document.querySelectorAll(".photo-section.hero-slider .slide");
+        if (slides.length === 0) return; // Se per caso non c'è, non fa nulla
+        
+        let currentIndex = 0;
+        const intervalTime = 6000; // 3000 millisecondi = 3 secondi (puoi mettere es. 4000 per 4 secondi)
+
+        function nextSlide() {
+            // Rimuove la classe active dall'immagine corrente
+            slides[currentIndex].classList.remove("active");
+            
+            // Passa alla successiva (e ricomincia da capo se è l'ultima)
+            currentIndex = (currentIndex + 1) % slides.length;
+            
+            // Aggiunge la classe active alla nuova immagine
+            slides[currentIndex].classList.add("active");
+        }
+
+        // Avvia il timer automatico
+        setInterval(nextSlide, intervalTime);
+    });
+</script>
+
 </html>
